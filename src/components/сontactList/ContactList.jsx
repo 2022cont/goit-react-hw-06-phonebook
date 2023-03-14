@@ -1,12 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-
-import { todoDeleted } from '../../redux/todosSlice';
-
 import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts }) => {
-    const dispatch = useDispatch();
+export const ContactList = ({ contacts, onDeleteContact}) => {
+console.log('ContactList', contacts);
+
     return (
         <ul>
             {contacts.map(({ id, name, number }) => (
@@ -16,7 +13,7 @@ export const ContactList = ({ contacts }) => {
                     </span>
                     <button
                         type='button'
-                        onClick={() => dispatch(todoDeleted({ id }))}
+                        onClick={() => onDeleteContact(id)}
                         className={css.btnDel}
                     >
                         Delete
@@ -25,7 +22,5 @@ export const ContactList = ({ contacts }) => {
             ))}
         </ul>
     )
-
+  
 };
-
-

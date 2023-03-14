@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { useSelector} from 'react-redux';
-
+import { useSelector,useDispatch } from 'react-redux';
 import Form from './form/Form';
 import { ContactList } from './сontactList/ContactList';
 
-import { getTodosSlice } from '../redux/todosSlice';
-
+import { getTodosSlice, todoDeleted, getTodosSliceRemove} from '../redux/todosSlice';
 
 export default function App() {
   const contacts = useSelector(getTodosSlice);
-  
+  const contactsRn = useSelector(getTodosSliceRemove);
+  const [contactsNew, setContactsNew] = useState([]);
+   const dispatch = useDispatch();
   const [filterName, setFilterName] = useState('');
 
   const onInputClick = event => {
@@ -17,15 +17,19 @@ export default function App() {
     setFilterName(event.target.value);
   };
 
-  // const deleteContact = contactsId => {
-  //   setContacts(contacts.filter(contact => contact.id !== contactsId));
-  // };
+  const deleteContact = (id) => {
+    dispatch(todoDeleted(id));
+   setContactsNew([...contactsRn]);
+     
+  };
 
   const filtered = !filterName
     ? contacts
     : contacts.filter((contact) =>
       contact.name.toLowerCase().includes(filterName.toLowerCase())
     );
+
+  console.log('contactsNew', contactsNew);
 
   return (
 
@@ -51,12 +55,12 @@ export default function App() {
         type="text"
         placeholder={filterName ? filterName : 'Search ...'}
         value={filterName}
-        
+
         onChange={onInputClick}
 
       />
 
-      <ContactList contacts={filtered} />
+      <ContactList contacts={filtered ? filtered : contactsNew} onDeleteContact={deleteContact}/>
 
     </div>
   );

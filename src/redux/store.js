@@ -2,15 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from 'redux-persist';
 
-import { todosSlice, persistedReducer } from './todosSlice';
-import { formSlice } from "./formSlice";
-
-
+import { persistedReducer, todosSlice } from './todosSlice';
 
 export const store = configureStore({
   reducer: {
-    form: formSlice.reducer,
-    
+   
     addTodo: persistedReducer,
     todoDeleted: todosSlice.reducer,
   },
