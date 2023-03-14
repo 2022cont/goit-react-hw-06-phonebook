@@ -1,15 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER} from 'redux-persist';
+import { persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
-import { persistedReducer, todosSlice } from './todosSlice';
+import { persistedReducer } from './todosSlice';
 
 export const store = configureStore({
   reducer: {
-   
-    addTodo: persistedReducer,
-    todoDeleted: todosSlice.reducer,
+    contacts: persistedReducer,
   },
+  
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

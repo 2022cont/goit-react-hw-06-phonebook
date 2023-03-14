@@ -10,8 +10,7 @@ export const todosSlice = createSlice({
     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },],
-
-   },
+    },
 
 
   reducers: {
@@ -20,9 +19,8 @@ export const todosSlice = createSlice({
     },
 
     todoDeleted(state, action) {
-         return state.contacts.filter(todo => todo.id !== action.payload);
+          state.contacts = state.contacts.filter(todo => todo.id !== action.payload);
     },
-
 
   },
 });
@@ -35,8 +33,7 @@ const persistConfig = {
 
 export const persistedReducer = persistReducer(persistConfig, todosSlice.reducer);
 
-export const { addTodo, todoDeleted } = todosSlice.actions;
+export const { addTodo, todoDeleted} = todosSlice.actions;
 
-export const getTodosSlice = state => state.addTodo.contacts;
-export const getTodosSliceRemove = state => state.todoDeleted.contacts;
+
 

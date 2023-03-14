@@ -1,15 +1,10 @@
 import { useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Form from './form/Form';
 import { ContactList } from './сontactList/ContactList';
 
-import { getTodosSlice, todoDeleted, getTodosSliceRemove} from '../redux/todosSlice';
-
 export default function App() {
-  const contacts = useSelector(getTodosSlice);
-  const contactsRn = useSelector(getTodosSliceRemove);
-  const [contactsNew, setContactsNew] = useState([]);
-   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
   const [filterName, setFilterName] = useState('');
 
   const onInputClick = event => {
@@ -17,11 +12,6 @@ export default function App() {
     setFilterName(event.target.value);
   };
 
-  const deleteContact = (id) => {
-    dispatch(todoDeleted(id));
-   setContactsNew([...contactsRn]);
-     
-  };
 
   const filtered = !filterName
     ? contacts
@@ -29,7 +19,6 @@ export default function App() {
       contact.name.toLowerCase().includes(filterName.toLowerCase())
     );
 
-  console.log('contactsNew', contactsNew);
 
   return (
 
@@ -60,7 +49,7 @@ export default function App() {
 
       />
 
-      <ContactList contacts={filtered ? filtered : contactsNew} onDeleteContact={deleteContact}/>
+      <ContactList contactsFilters={ filtered} />
 
     </div>
   );

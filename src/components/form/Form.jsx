@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addTodo, getTodosSliceRemove } from "../../redux/todosSlice";
+import { addTodo } from "../../redux/todosSlice";
 
 import css from './Form.module.css';
 
@@ -13,9 +13,9 @@ export default function Form() {
 
     const dispatch = useDispatch();
 
-    let contacts = useSelector(getTodosSliceRemove);
+    const contacts = useSelector(state => state.contacts.contacts);
 
-   const handleInput = event => {
+    const handleInput = event => {
 
         switch (event.target.name) {
             case 'name':
@@ -32,19 +32,21 @@ export default function Form() {
 
     const handleAddSubmit = event => {
         event.preventDefault();
-        const form = event.currentTarget;
-
+  
         if (contacts.find(element => element.name === name)) {
-            form.reset();
+            reset();
             return alert(name + " is already in contacts")
         } else {
             dispatch(addTodo({ id: nanoid(4), name: name, number: number }));
-            form.reset();
+            reset();
         }
     };
 
- 
-
+     const reset = () => {
+        setName('');
+        setNumber('');
+    };
+  
     return (
         <form className={css.form} onSubmit={handleAddSubmit}>
             <label className={css.labelForm}>Name</label>
